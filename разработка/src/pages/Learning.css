@@ -176,9 +176,47 @@
 }
 
 @media (max-width: 768px) {
+  .learning {
+    padding: 2rem 1rem;
+  }
+
+  .learning-header h1 {
+    font-size: 2rem;
+  }
+
+  .learning-sections {
+    gap: 3rem;
+  }
+
+  .methodologies-section h2,
+  .plans-section h2 {
+    font-size: 1.5rem;
+  }
+
   .methodologies-grid,
   .plans-grid {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .methodology-card,
+  .plan-card {
+    padding: 1.5rem;
+  }
+
+  .methodology-icon {
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .learning-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .methodology-card h3,
+  .plan-header h3 {
+    font-size: 1.2rem;
   }
 }
 

@@ -226,8 +226,20 @@
 }
 
 @media (max-width: 768px) {
+  .methodology-detail {
+    padding: 2rem 1rem;
+  }
+
   .methodology-header h1 {
     font-size: 2rem;
+  }
+
+  .methodology-icon-large {
+    font-size: 3.5rem;
+  }
+
+  .methodology-description {
+    font-size: 1rem;
   }
   
   .methodology-content {
@@ -236,8 +248,41 @@
   
   .roles-grid,
   .artifacts-grid,
-  .elements-grid {
+  .elements-grid,
+  .levels-list,
+  .concepts-grid {
     grid-template-columns: 1fr;
+  }
+
+  .stage-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .stage-number {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .methodology-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .methodology-icon-large {
+    font-size: 3rem;
+  }
+
+  .content-section h2 {
+    font-size: 1.4rem;
+  }
+
+  .back-link {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
   }
 }
 

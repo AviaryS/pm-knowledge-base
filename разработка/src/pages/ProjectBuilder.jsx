@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import './ProjectBuilder.css'
 
 function ProjectBuilder() {
@@ -12,10 +13,20 @@ function ProjectBuilder() {
     features: []
   })
   const [showDialog, setShowDialog] = useState(false)
+  const [savedProjects, setSavedProjects] = useState([])
+  const [showProjectsList, setShowProjectsList] = useState(false)
+  const [editingProjectId, setEditingProjectId] = useState(null)
 
   const methodologies = ['Agile', 'Scrum', 'Kanban', 'Scrumban', 'Waterfall']
   const teamSizes = ['1-3', '4-7', '8-12', '13+']
   const durations = ['1-3 месяца', '3-6 месяцев', '6-12 месяцев', '12+ месяцев']
+
+  useEffect(() => {
+    const saved = localStorage.getItem('pm_projects')
+    if (saved) {
+      setSavedProjects(JSON.parse(saved))
+    }
+  }, [])
 
   const handleNext = () => {
     if (step < 4) setStep(step + 1)
@@ -32,6 +43,58 @@ function ProjectBuilder() {
     setProjectData({ ...projectData, [field]: value })
   }
 
+  const handleSaveProject = () => {
+    const project = {
+      id: editingProjectId || Date.now(),
+      ...projectData,
+      createdAt: editingProjectId ? savedProjects.find(p => p.id === editingProjectId)?.createdAt : new Date().toISOString(),
+      updatedAt: new Date().toISOString()
+    }
+
+    let updatedProjects
+    if (editingProjectId) {
+      updatedProjects = savedProjects.map(p => p.id === editingProjectId ? project : p)
+    } else {
+      updatedProjects = [...savedProjects, project]
+    }
+
+    setSavedProjects(updatedProjects)
+    localStorage.setItem('pm_projects', JSON.stringify(updatedProjects))
+    setShowDialog(false)
+    setStep(1)
+    setProjectData({ name: '', description: '', methodology: '', teamSize: '', duration: '', features: [] })
+    setEditingProjectId(null)
+  }
+
+  const handleLoadProject = (project) => {
+    setProjectData({
+      name: project.name,
+      description: project.description,
+      methodology: project.methodology,
+      teamSize: project.teamSize,
+      duration: project.duration,
+      features: project.features || []
+    })
+    setEditingProjectId(project.id)
+    setShowProjectsList(false)
+    setStep(1)
+  }
+
+  const handleDeleteProject = (id) => {
+    if (confirm('Удалить этот проект?')) {
+      const updated = savedProjects.filter(p => p.id !== id)
+      setSavedProjects(updated)
+      localStorage.setItem('pm_projects', JSON.stringify(updated))
+    }
+  }
+
+  const handleNewProject = () => {
+    setProjectData({ name: '', description: '', methodology: '', teamSize: '', duration: '', features: [] })
+    setEditingProjectId(null)
+    setStep(1)
+    setShowProjectsList(false)
+  }
+
   return (
     <div className="project-builder">
       <div className="builder-header">
@@ -39,64 +102,147 @@ function ProjectBuilder() {
         <p>Настрой проект с нуля, выбери методологию и параметры</p>
       </div>
 
-      <div className="builder-container">
-        <div className="progress-bar">
-          <div className={`progress-step ${step >= 1 ? 'active' : ''}`}>1</div>
-          <div className={`progress-line ${step >= 2 ? 'active' : ''}`}></div>
-          <div className={`progress-step ${step >= 2 ? 'active' : ''}`}>2</div>
-          <div className={`progress-line ${step >= 3 ? 'active' : ''}`}></div>
-          <div className={`progress-step ${step >= 3 ? 'active' : ''}`}>3</div>
-          <div className={`progress-line ${step >= 4 ? 'active' : ''}`}></div>
-          <div className={`progress-step ${step >= 4 ? 'active' : ''}`}>4</div>
-        </div>
-
-        <div className="builder-content">
-          {step === 1 && (
-            <ProjectStep1 
-              data={projectData}
-              onChange={handleChange}
-            />
-          )}
-          {step === 2 && (
-            <ProjectStep2 
-              data={projectData}
-              onChange={handleChange}
-              methodologies={methodologies}
-            />
-          )}
-          {step === 3 && (
-            <ProjectStep3 
-              data={projectData}
-              onChange={handleChange}
-              teamSizes={teamSizes}
-              durations={durations}
-            />
-          )}
-          {step === 4 && (
-            <ProjectStep4 
-              data={projectData}
-              onChange={handleChange}
-            />
-          )}
-        </div>
-
-        <div className="builder-actions">
-          {step > 1 && (
-            <button className="btn btn-secondary" onClick={handleBack}>
-              Назад
-            </button>
-          )}
-          <button className="btn btn-primary" onClick={handleNext}>
-            {step === 4 ? 'Создать проект' : 'Далее'}
+      <div className="builder-actions-top">
+        <button 
+          className="btn btn-secondary"
+          onClick={() => setShowProjectsList(!showProjectsList)}
+        >
+          {showProjectsList ? 'Скрыть проекты' : 'Мои проекты'} ({savedProjects.length})
+        </button>
+        {!showProjectsList && (
+          <button 
+            className="btn btn-secondary"
+            onClick={handleNewProject}
+          >
+            Новый проект
           </button>
-        </div>
+        )}
       </div>
+
+      {showProjectsList && (
+        <ProjectsList 
+          projects={savedProjects}
+          onLoad={handleLoadProject}
+          onDelete={handleDeleteProject}
+          onClose={() => setShowProjectsList(false)}
+        />
+      )}
+
+      {!showProjectsList && (
+        <div className="builder-container">
+          <div className="progress-bar">
+            <div className={`progress-step ${step >= 1 ? 'active' : ''}`}>1</div>
+            <div className={`progress-line ${step >= 2 ? 'active' : ''}`}></div>
+            <div className={`progress-step ${step >= 2 ? 'active' : ''}`}>2</div>
+            <div className={`progress-line ${step >= 3 ? 'active' : ''}`}></div>
+            <div className={`progress-step ${step >= 3 ? 'active' : ''}`}>3</div>
+            <div className={`progress-line ${step >= 4 ? 'active' : ''}`}></div>
+            <div className={`progress-step ${step >= 4 ? 'active' : ''}`}>4</div>
+          </div>
+
+          <div className="builder-content">
+            {step === 1 && (
+              <ProjectStep1 
+                data={projectData}
+                onChange={handleChange}
+              />
+            )}
+            {step === 2 && (
+              <ProjectStep2 
+                data={projectData}
+                onChange={handleChange}
+                methodologies={methodologies}
+              />
+            )}
+            {step === 3 && (
+              <ProjectStep3 
+                data={projectData}
+                onChange={handleChange}
+                teamSizes={teamSizes}
+                durations={durations}
+              />
+            )}
+            {step === 4 && (
+              <ProjectStep4 
+                data={projectData}
+                onChange={handleChange}
+              />
+            )}
+          </div>
+
+          <div className="builder-actions">
+            {step > 1 && (
+              <button className="btn btn-secondary" onClick={handleBack}>
+                Назад
+              </button>
+            )}
+            <button className="btn btn-primary" onClick={handleNext}>
+              {step === 4 ? 'Создать проект' : 'Далее'}
+            </button>
+          </div>
+        </div>
+      )}
 
       {showDialog && (
         <ProjectSummaryDialog 
           projectData={projectData}
           onClose={() => setShowDialog(false)}
+          onSave={handleSaveProject}
+          isEditing={!!editingProjectId}
         />
+      )}
+    </div>
+  )
+}
+
+function ProjectsList({ projects, onLoad, onDelete, onClose }) {
+  return (
+    <div className="projects-list-container">
+      <div className="projects-list-header">
+        <h2>Мои проекты</h2>
+        <button className="close-btn" onClick={onClose}>×</button>
+      </div>
+      {projects.length === 0 ? (
+        <div className="empty-projects">
+          <p>У вас пока нет сохраненных проектов</p>
+          <p className="hint">Создайте первый проект, чтобы он появился здесь</p>
+        </div>
+      ) : (
+        <div className="projects-grid">
+          {projects.map(project => (
+            <div key={project.id} className="project-card">
+              <div className="project-card-header">
+                <h3>{project.name || 'Без названия'}</h3>
+                <div className="project-card-actions">
+                  <button onClick={() => onLoad(project)} className="load-btn">📝</button>
+                  <button onClick={() => onDelete(project.id)} className="delete-btn">🗑️</button>
+                </div>
+              </div>
+              <div className="project-card-body">
+                <p className="project-description">{project.description || 'Нет описания'}</p>
+                <div className="project-meta">
+                  <span className="meta-item">
+                    <strong>Методология:</strong> {project.methodology || 'Не выбрана'}
+                  </span>
+                  <span className="meta-item">
+                    <strong>Команда:</strong> {project.teamSize || 'Не указано'}
+                  </span>
+                  <span className="meta-item">
+                    <strong>Длительность:</strong> {project.duration || 'Не указано'}
+                  </span>
+                  <span className="meta-item">
+                    <strong>Фичи:</strong> {project.features?.length || 0}
+                  </span>
+                </div>
+                {project.updatedAt && (
+                  <p className="project-date">
+                    Обновлено: {new Date(project.updatedAt).toLocaleDateString('ru-RU')}
+                  </p>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
       )}
     </div>
   )
@@ -241,12 +387,12 @@ function ProjectStep4({ data, onChange }) {
   )
 }
 
-function ProjectSummaryDialog({ projectData, onClose }) {
+function ProjectSummaryDialog({ projectData, onClose, onSave, isEditing }) {
   return (
     <div className="dialog-overlay" onClick={onClose}>
       <div className="dialog-content summary-dialog" onClick={(e) => e.stopPropagation()}>
         <div className="dialog-header">
-          <h2>🎉 Проект создан!</h2>
+          <h2>{isEditing ? '✏️ Редактирование проекта' : '🎉 Проект создан!'}</h2>
           <button className="close-btn" onClick={onClose}>×</button>
         </div>
         <div className="dialog-body">
@@ -277,8 +423,11 @@ function ProjectSummaryDialog({ projectData, onClose }) {
             )}
           </div>
           <div className="dialog-actions">
-            <button className="btn btn-primary" onClick={onClose}>
-              Отлично!
+            <button className="btn btn-secondary" onClick={onClose}>
+              Отмена
+            </button>
+            <button className="btn btn-primary" onClick={onSave}>
+              {isEditing ? 'Сохранить изменения' : 'Сохранить проект'}
             </button>
           </div>
         </div>
@@ -288,4 +437,3 @@ function ProjectSummaryDialog({ projectData, onClose }) {
 }
 
 export default ProjectBuilder
-
