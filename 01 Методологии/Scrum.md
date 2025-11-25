@@ -94,7 +94,27 @@ Scrum - это фреймворк для разработки, доставки 
 ❌ Не подходит для очень маленьких команд
 
 ## Связанные темы
-[[Agile]] | [[Kanban]] | [[Scrumban]]
 
-#scrum #agile #methodology
+### Методологии
+- [[01 Методологии/Agile|Agile]] `#agile` - основа Scrum
+- [[01 Методологии/Kanban|Kanban]] `#kanban` - альтернативный подход
+- [[01 Методологии/Scrumban|Scrumban]] `#scrumban` - гибрид Scrum и Kanban
+
+### Шаблоны документов
+- [[04 Шаблоны документов/Sprint Planning|Sprint Planning]] `#sprint` - для планирования спринта
+- [[04 Шаблоны документов/Retrospective|Retrospective]] `#retrospective` - для ретроспектив
+- [[04 Шаблоны документов/User Story|User Story]] `#user-story` - для бэклога
+
+### Матрицы и инструменты
+- [[02 Матрицы и инструменты/Priority Matrix|Priority Matrix]] `#priority` - для приоритизации бэклога
+- [[02 Матрицы и инструменты/Impact Effort Matrix|Impact/Effort Matrix]] `#impact-effort` - для оценки задач
+
+### Практики
+- [[05 Практики и техники/Оценка задач|Оценка задач]] `#estimation` - Planning Poker, Story Points
+
+---
+
+**Теги:** #scrum #agile #methodology #pm #it-pm
+
+**Навигация:** [[README|Главная]] ← [[01 Методологии/README|Методологии]] ← Scrum
 
