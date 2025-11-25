@@ -1,0 +1,184 @@
+.learning {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+.learning-header {
+  text-align: center;
+  color: white;
+  margin-bottom: 3rem;
+}
+
+.learning-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.learning-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+}
+
+.methodologies-section h2,
+.plans-section h2 {
+  color: white;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.methodologies-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.methodology-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.methodology-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.methodology-icon {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+}
+
+.methodology-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.methodology-card p {
+  color: #666;
+  margin-bottom: 1rem;
+  flex-grow: 1;
+}
+
+.learn-more {
+  color: #667eea;
+  font-weight: 600;
+  margin-top: auto;
+}
+
+.plans-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+}
+
+.plan-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.plan-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.plan-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.plan-header h3 {
+  color: #333;
+  font-size: 1.3rem;
+}
+
+.duration {
+  background: #667eea;
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.plan-description {
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.plan-details {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 2px solid #f0f0f0;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.plan-details h4 {
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.plan-details ul {
+  list-style: none;
+  margin-bottom: 1.5rem;
+}
+
+.plan-details li {
+  padding: 0.5rem 0;
+  color: #666;
+}
+
+.start-plan-btn {
+  width: 100%;
+  padding: 1rem;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.start-plan-btn:hover {
+  background: #5568d3;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .methodologies-grid,
+  .plans-grid {
+    grid-template-columns: 1fr;
+  }
+}
+

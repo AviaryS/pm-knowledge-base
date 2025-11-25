@@ -1,0 +1,243 @@
+.methodology-detail {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+.back-link {
+  display: inline-block;
+  color: white;
+  text-decoration: none;
+  margin-bottom: 2rem;
+  padding: 0.5rem 1rem;
+  background: rgba(255,255,255,0.2);
+  border-radius: 8px;
+  transition: all 0.3s;
+}
+
+.back-link:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+.methodology-header {
+  text-align: center;
+  color: white;
+  margin-bottom: 3rem;
+}
+
+.methodology-icon-large {
+  font-size: 5rem;
+  margin-bottom: 1rem;
+}
+
+.methodology-header h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.methodology-description {
+  font-size: 1.2rem;
+  opacity: 0.95;
+}
+
+.methodology-content {
+  background: white;
+  border-radius: 20px;
+  padding: 3rem;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+}
+
+.content-section {
+  margin-bottom: 3rem;
+}
+
+.content-section:last-child {
+  margin-bottom: 0;
+}
+
+.content-section h2 {
+  color: #333;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 3px solid #667eea;
+}
+
+.values-list,
+.principles-list,
+.events-list {
+  list-style: none;
+  padding: 0;
+}
+
+.values-list li,
+.principles-list li,
+.events-list li {
+  padding: 1rem;
+  margin-bottom: 0.8rem;
+  background: #f9fafb;
+  border-radius: 8px;
+  border-left: 4px solid #667eea;
+  color: #333;
+  line-height: 1.6;
+}
+
+.roles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.role-card {
+  padding: 1.5rem;
+  background: #f9fafb;
+  border-radius: 12px;
+  border-left: 4px solid #667eea;
+}
+
+.role-card h3 {
+  color: #667eea;
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+}
+
+.role-card p {
+  color: #666;
+  line-height: 1.6;
+}
+
+.artifacts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.artifact-card {
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 12px;
+  text-align: center;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.stages-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.stage-item {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background: #f9fafb;
+  border-radius: 12px;
+  border-left: 4px solid #667eea;
+}
+
+.stage-number {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #667eea;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.stage-name {
+  color: #333;
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+.elements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.element-group {
+  padding: 1.5rem;
+  background: #f9fafb;
+  border-radius: 12px;
+}
+
+.element-group h3 {
+  color: #667eea;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.element-group ul {
+  list-style: none;
+  padding: 0;
+}
+
+.element-group li {
+  padding: 0.8rem 0;
+  color: #666;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.element-group li:last-child {
+  border-bottom: none;
+}
+
+.levels-list,
+.concepts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.level-item,
+.concept-card {
+  padding: 1.5rem;
+  background: #f9fafb;
+  border-radius: 12px;
+  border-left: 4px solid #667eea;
+  color: #333;
+  font-weight: 500;
+  text-align: center;
+}
+
+.error-state {
+  text-align: center;
+  color: white;
+  padding: 4rem 2rem;
+}
+
+.error-state h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.error-state a {
+  color: white;
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .methodology-header h1 {
+    font-size: 2rem;
+  }
+  
+  .methodology-content {
+    padding: 2rem 1.5rem;
+  }
+  
+  .roles-grid,
+  .artifacts-grid,
+  .elements-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
