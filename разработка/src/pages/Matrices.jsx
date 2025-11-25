@@ -160,13 +160,20 @@ function MatrixBuilderDialog({ onClose, matrix }) {
     if (matrix) {
       const saved = localStorage.getItem(`matrix_${matrix.id}`)
       if (saved) {
-        setItems(JSON.parse(saved))
+        try {
+          setItems(JSON.parse(saved))
+        } catch (e) {
+          console.error('Error loading matrix data:', e)
+          setItems([])
+        }
+      } else {
+        setItems([])
       }
     }
   }, [matrix])
 
   useEffect(() => {
-    if (matrix && items.length > 0) {
+    if (matrix) {
       localStorage.setItem(`matrix_${matrix.id}`, JSON.stringify(items))
     }
   }, [items, matrix])
@@ -211,7 +218,7 @@ function MatrixBuilderDialog({ onClose, matrix }) {
   }
 
   const handleClear = () => {
-    if (confirm('Очистить все записи?')) {
+    if (window.confirm('Очистить все записи?')) {
       setItems([])
       localStorage.removeItem(`matrix_${matrix.id}`)
     }
